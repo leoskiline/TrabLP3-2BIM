@@ -8,7 +8,6 @@ package servlets;
 import entidades.Servico;
 import entidades.Usuario;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -42,16 +41,16 @@ public class TelaUsuario extends HttpServlet {
                                 "    <p class=\"card-text\">Nivel de Acesso: %s.</p>\n" +
                                 "    <p class=\"card-text\">Logradouro: %s.</p>\n" +
                                 "  </div></div><div class='col-sm-7' align='center'><h5>Gerenciar Categorias</h5>"
-                    + "<form name='dados' id='fdados' class=\"form-inline ml-5\">\n" +
-                    "  <input type=\"text\" size='1' class=\"form-control mb-2 mr-sm-2\" placeholder=\"COD\" name='cod' id='cod' disabled><input type=\"text\" class=\"form-control mb-2 mr-sm-2\" placeholder=\"Digite a Categoria\" name='categoria' id='categoria' required>\n" +
-                    "  <input onclick='GravarCategoria()' name='acao' value='Gravar' type='submit' class='btn btn-success mb-2'/><input style='margin-left:10px;margin-bottom:8px;' value='Listar' onclick='MostrarCategoria2()' type='submit' class='btn btn-info'/><div id='mostrarCat'></div><div id='gravouCat'></div>\n" +
-                    "</form></div>" +
+                                + "<form name='dados' id='fdados' class=\"form-inline ml-5\">\n" +
+                                "  <input type=\"text\" size='1' class=\"form-control mb-2 mr-sm-2\" placeholder=\"COD\" name='cod' id='cod' disabled><input type=\"text\" class=\"form-control mb-2 mr-sm-2\" placeholder=\"Digite a Categoria\" name='categoria' id='categoria' required>\n" +
+                                "  <input onclick='GravarCategoria()' name='acao' value='Gravar' type='submit' class='btn btn-success mb-2'/><input style='margin-left:10px;margin-bottom:8px;' value='Listar' onclick='MostrarCategoria2()' type='submit' class='btn btn-info'/><div id='mostrarCat'></div><div id='gravouCat'></div>\n" +
+                                "</form></div>" +
                                 "</div></div>"
                     , user.getFoto(),""+user.getNome(),""+user.getUsuario(),""+user.getNivel(),""+user.getLogradouro());
         }
         if(user != null && user.getNome().equalsIgnoreCase("prestador de servico"))
         {
-            res = "";
+            res = String.format("%s", "teste");
         }
         if(user == null)
             res = "<div style='text-align:center' class=\"alert alert-danger alert-dismissible fade show\">\n" +
@@ -108,10 +107,10 @@ public class TelaUsuario extends HttpServlet {
                     break;
                 case "confirmar":
                     erro = "<div class=\"alert alert-success alert-dismissible fade show\">\n" +
-"    <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n" +
-"    <strong>Operacao Efetuada Com Sucesso!</strong> \n" +
-"  </div>";
-                    Servico serv = new Servico(cod,categoria);
+                            "    <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n" +
+                            "    <strong>Operacao Efetuada Com Sucesso!</strong> \n" +
+                            "  </div>";
+                                                Servico serv = new Servico(cod,categoria);
                     if (cod == 0) 
                         { 
                             if (!ctrl.inserir(serv))
