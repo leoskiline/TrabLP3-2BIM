@@ -53,7 +53,9 @@ public class TelaUsuario extends HttpServlet {
             res = "";
         }
         if(user == null)
-            res = "<p style='text-align:center'>Usuario ou Senha Incorreta!</p>";
+            res = "<div style='text-align:center' class=\"alert alert-danger alert-dismissible fade show\">\n" +
+                    "    <strong>Usuario e/ou Senha Incorreta</strong>\n" +
+                    "  </div>";
         return res;
     }
     

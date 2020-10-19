@@ -53,12 +53,7 @@
                     <input type="password" id="senha" name="senha" class="form-control" placeholder="Senha" required="">
                     
                     </div>
-
-                    <div class="checkbox mb-3 pt-3">
-                    <label>
-                    <input type="checkbox" value="remember-me"> Lembrar-me
-                    </label>
-                    </div>
+                        <div class="mt-3 mb-3"></div>
                     <button class="btn btn-lg btn-dark btn-block" type="submit">Autenticar</button>
                     <p class="mt-5 mb-3 text-muted text-center">© 2020</p>
                     </form>
