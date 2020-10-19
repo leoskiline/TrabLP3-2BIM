@@ -30,6 +30,12 @@ public class Usuario {
         this.nome = nome;
         this.logradouro = logradouro;
     }
+    
+    public Usuario(String usuario,String senha)
+    {
+        this.usuario = usuario;
+        this.senha = senha;
+    }
 
     public int getId_usuario() {
         return id_usuario;

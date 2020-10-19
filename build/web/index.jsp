@@ -30,7 +30,7 @@
             <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
                 <ul class="navbar-nav">
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.jsp">Anuncios</a>
+                        <a class="nav-link">Anuncios</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="userarea.jsp">Area do Usuario</a>

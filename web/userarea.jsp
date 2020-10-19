@@ -6,7 +6,6 @@
 <%@page import="servlets.TelaUsuario"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -32,7 +31,7 @@
                         <a class="nav-link" href="index.jsp">Anuncios</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="userarea.jsp">Area do Usuario</a>
+                        <a class="nav-link">Area do Usuario</a>
                     </li>
                  </ul>
             </nav>

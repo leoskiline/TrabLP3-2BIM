@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import persistencia.DALServico;
 import persistencia.DALUsuario;
 
@@ -25,14 +26,14 @@ import persistencia.DALUsuario;
 @WebServlet(name = "TelaUsuario", urlPatterns = {"/TelaUsuario"})
 public class TelaUsuario extends HttpServlet {
 
-    public String tipoTela(String usuario,String senha)
+    public String tipoTela(String usuario,String senha,HttpSession sessao)
     {
         DALUsuario ctrl = new DALUsuario();
         Usuario user = ctrl.getUsuario(usuario, senha);
         String res = "";
         if(user != null && user.getNivel().equalsIgnoreCase("administrador"))
         {
-            res = String.format("<div class='container border pb-3 pt-3' style='text-align:center;font-size:30px'>Seja bem vindo(a) ao Sistema<button type='button' class='btn btn-outline-danger float-right mt-2'>Deslogar</button><br></div>"
+            res = String.format("<div class='container border pb-3 pt-3' style='text-align:center;font-size:30px'>Seja bem vindo(a) ao Sistema<form action='Logout' class=\"float-right mt-1\"><input type='submit' value='Deslogar' class='btn btn-outline-danger float-right'/></form><br></div>"
                               + "<div class='row pl-3'><div class='card' style=\"width:400px;height:400px\">\n" +
                                 "  <img class=\"card-img-top\" src=\"%s\" alt=\"Card image\">\n" +
                                 "  <div class=\"card-body\">\n" +
@@ -126,10 +127,11 @@ public class TelaUsuario extends HttpServlet {
 
             }
         }
-        
-        if(usuario != null && senha != null)
+        HttpSession sessao=request.getSession(true);
+        sessao.setAttribute("usuario", new Usuario(usuario,senha));
+        if(usuario != null)
         {
-            String resultado = tipoTela(usuario,senha);
+            String resultado = tipoTela(usuario,senha,sessao);
             response.getWriter().print(resultado);
         }
         
