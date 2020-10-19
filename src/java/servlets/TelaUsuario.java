@@ -48,9 +48,10 @@ public class TelaUsuario extends HttpServlet {
                                 "</div></div>"
                     , user.getFoto(),""+user.getNome(),""+user.getUsuario(),""+user.getNivel(),""+user.getLogradouro());
         }
-        if(user != null && user.getNome().equalsIgnoreCase("prestador de servico"))
+        if(user != null && user.getNivel().equalsIgnoreCase("prestador de servico"))
         {
-            res = String.format("%s", "teste");
+            res = String.format("<div class='container border pb-3 pt-3' style='text-align:center;font-size:30px'>Seja bem vindo(a) ao Sistema<form action='Logout' class=\"float-right mt-1\"><input type='submit' value='Deslogar' class='btn btn-outline-danger float-right'/></form><br></div>"
+                    + "<div class='float-right'><b>Usuario:</b> %s || <b>Nivel de Acesso:</b> %s</div><br><div align='center'><h5>Cadastrar Anuncios</h5></div><div class='container border'>Testando 123</div>",user.getUsuario(),""+user.getNivel());
         }
         if(user == null)
             res = "<div style='text-align:center' class=\"alert alert-danger alert-dismissible fade show\">\n" +
