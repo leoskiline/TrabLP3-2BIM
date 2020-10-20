@@ -179,7 +179,6 @@ public class TelaUsuario extends HttpServlet {
                     {
                         anunctrl.inserir(a);
                     }
-                    else
                     response.sendRedirect(".");
                     break;
 
