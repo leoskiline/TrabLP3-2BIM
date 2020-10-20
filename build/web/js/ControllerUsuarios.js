@@ -15,6 +15,8 @@ function LogarUsuario()
 
 }
 
+
+
 function MostrarCategoria()
 {   
     //event.preventDefault() // evita refresh da tela
@@ -44,6 +46,20 @@ function MostrarCategoria2()
         });
     }).catch (function(err) {console.error(err)})
 }
+
+function SelectCategorias(listCategoria)
+{
+        
+        const CategoriasSelect = document.getElementById("cbCategoria")
+        var CategoriasList = listCategoria.split(",");
+        CategoriasList.forEach((categorias) =>
+        {
+           option = new Option(categorias, categorias.toLowerCase())
+           CategoriasSelect.options[CategoriasSelect.options.length] = option
+        })
+        return CategoriasList;
+}
+
 
 function GravarCategoria()
 {

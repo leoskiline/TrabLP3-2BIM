@@ -5,6 +5,7 @@
  */
 package servlets;
 
+import entidades.Anuncio;
 import entidades.Servico;
 import entidades.Usuario;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import persistencia.DALAnuncio;
 import persistencia.DALServico;
 import persistencia.DALUsuario;
 
@@ -36,10 +38,10 @@ public class TelaUsuario extends HttpServlet {
                               + "<div class='row pl-3'><div class='card' style=\"width:400px;height:400px\">\n" +
                                 "  <img class=\"card-img-top\" src=\"%s\" alt=\"Card image\">\n" +
                                 "  <div class=\"card-body\">\n" +
-                                "    <h4 class=\"card-title\">%s</h4>\n" +
-                                "    <p class=\"card-text\">Usuario: %s.</p>\n" +
-                                "    <p class=\"card-text\">Nivel de Acesso: %s.</p>\n" +
-                                "    <p class=\"card-text\">Logradouro: %s.</p>\n" +
+                                "    <h4>bem-vindo %s</h4>\n" +
+                                "    <br><b>Usuario:</b> %s.\n" +
+                                "    <br><b>Nivel de Acesso:</b> %s.\n" +
+                                "    <br><b>Logradouro:</b> %s.\n" +
                                 "  </div></div><div class='col-sm-7' align='center'><h5>Gerenciar Categorias</h5>"
                                 + "<form name='dados' id='fdados' class=\"form-inline ml-5\">\n" +
                                 "  <input type=\"text\" size='1' class=\"form-control mb-2 mr-sm-2\" placeholder=\"COD\" name='cod' id='cod' disabled><input type=\"text\" class=\"form-control mb-2 mr-sm-2\" placeholder=\"Digite a Categoria\" name='categoria' id='categoria' required>\n" +
@@ -50,8 +52,30 @@ public class TelaUsuario extends HttpServlet {
         }
         if(user != null && user.getNivel().equalsIgnoreCase("prestador de servico"))
         {
-            res = String.format("<div class='container border pb-3 pt-3' style='text-align:center;font-size:30px'>Seja bem vindo(a) ao Sistema<form action='Logout' class=\"float-right mt-1\"><input type='submit' value='Deslogar' class='btn btn-outline-danger float-right'/></form><br></div>"
-                    + "<div class='float-right'><b>Usuario:</b> %s || <b>Nivel de Acesso:</b> %s</div><br><div align='center'><h5>Cadastrar Anuncios</h5></div><div class='container border'>Testando 123</div>",user.getUsuario(),""+user.getNivel());
+            DALServico serv = new DALServico();
+            ArrayList<Servico> servarray = serv.getServico("");
+            res = "<div class='container border pb-3 pt-3' style='text-align:center;font-size:30px'>PAGINA DO PRESTADOR DE SERVICO<form action='Logout' class=\"float-right mt-1\"><input type='submit' value='Deslogar' class='btn btn-outline-danger float-right'/></form><br></div>"
+                              + "<div class='row pl-3'><div class='card' style=\"width:400px;height:400px;margin-top:2%\">\n" +
+                                "  <img class=\"card-img-top\" src='"+user.getFoto()+"' alt=\"Card image\">\n" +
+                                "  <div class=\"card-body\">\n" +
+                                "    <h4>bem-vindo "+user.getNome()+"</h4>\n" +
+                                "    <br><b>Usuario:</b> "+user.getUsuario()+".\n" +
+                                "    <br><b>Nivel de Acesso:</b> "+user.getNivel()+".\n" +
+                                "    <br><b>Logradouro:</b> "+user.getLogradouro()+".\n" +
+                                "  </div></div><div style='width:60%;'><div class='col-sm-8' style='margin-left:15%;margin-top:3%;' align='center'><h5>Cadastrar Anuncio</h5><div id='gravouAnuncio'></div>"
+                                + "<form method='GET' action='TelaUsuario' name='dados' id='fdados' class='form ml-5'>" +
+                                "<input type='hidden' name='usuario2' value='"+user.getUsuario()+"'/><input type='hidden' name='senha' value='"+user.getSenha()+"'/><input type='hidden' id='acao' name='acao' value='gravarAnuncio'/><input type='text' class='form-control mb-2 ml-2' placeholder='Descricao' onselect='SelectCategorias()' name='descricao' id='descricao'/>"
+                                + "<input type='text' class='form-control mb-2 ml-2' placeholder='Contato' name='contato' id='contato'/>"
+                                + "<input type='hidden' id='userid' name='userid' value='"+user.getId_usuario()+"'></input><input type='text' class='form-control mb-2 ml-2' placeholder='Horario Atendimento' name='horario_atendimento' id='horario_atendimento'/>"
+                                 + "<select class='custom-select mb-2 ml-2' id='categoriaCad' name='categoriaCad'>\n" +
+                                    "    <option value='' disabled selected>Categoria</option>";
+                                    for(int i = 0; i < servarray.size();i++)
+                                    {
+                                        res += "<option value='"+servarray.get(i).getId_servico()+"'>"+servarray.get(i).getCategoria()+"</option>";
+                                    }
+            res += "  </select><input class='form-control mb-2 ml-2' type='text' placeholder='URL FOTO 1' name='foto1'/><input class='form-control mb-2 ml-2' type='text' placeholder='URL FOTO 2' name='foto2'/><input class='form-control mb-2 ml-2' type='text' placeholder='URL FOTO 3' name='foto3'/><input value='Gravar' type='submit' class='btn btn-success mb-2 ml-2'/></form><div></div>"
+                    + "</div></div>";
+            
         }
         if(user == null)
             res = "<div style='text-align:center' class=\"alert alert-danger alert-dismissible fade show\">\n" +
@@ -97,8 +121,13 @@ public class TelaUsuario extends HttpServlet {
                     response.getWriter().print(resultado);
                     break;
                 case "apagar":
-                    if(!ctrl.apagar(cod))
-                        erro = "Erros ao Apagar Categoria";
+                    if(!ctrl.apagar(cod)) 
+                    {
+                         erro = "<div class=\"alert alert-danger alert-dismissible fade show\">\n" +
+                                "    <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n" +
+                                "    <strong>Falha ao Apagar Categoria!</strong> \n" +
+                                "  </div>";
+                    }
                     response.getWriter().print(erro);
                     break;
                 case "alterar":
@@ -111,18 +140,47 @@ public class TelaUsuario extends HttpServlet {
                             "    <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n" +
                             "    <strong>Operacao Efetuada Com Sucesso!</strong> \n" +
                             "  </div>";
-                                                Servico serv = new Servico(cod,categoria);
+                    Servico serv = new Servico(cod,categoria);
                     if (cod == 0) 
                         { 
                             if (!ctrl.inserir(serv))
-                                erro = "Erro ao gravar o categoria";
+                            {
+                                erro = "<div class=\"alert alert-dar alert-dismissible fade show\">\n" +
+                                        "    <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n" +
+                                        "    <strong>Falha ao Apagar Categoria!</strong> \n" +
+                                        "  </div>";
+                            }
+                                
                         }
                         else 
                         {   
                             if (!ctrl.alterar(serv))
-                                erro = "Erro ao alterar o categoria";
+                            {
+                                erro = "<div class=\"alert alert-dar alert-dismissible fade show\">\n" +
+                                        "    <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n" +
+                                        "    <strong>Falha ao Apagar Categoria!</strong> \n" +
+                                        "  </div>";
+                            }
                         }
                         response.getWriter().print(erro);
+                    break;
+                case "gravaranuncio":
+                    Anuncio a = new Anuncio();
+                    a.setContato(request.getParameter("contato"));
+                    a.setDescricao(request.getParameter("descricao"));
+                    a.setUsuario(request.getParameter("userid"));
+                    a.setHorario_atendimento(request.getParameter("horario_atendimento"));
+                    a.setServicos(request.getParameter("categoriaCad"));
+                    a.setFoto1(request.getParameter("foto1"));
+                    a.setFoto2(request.getParameter("foto2"));
+                    a.setFoto3(request.getParameter("foto3"));
+                    DALAnuncio anunctrl = new DALAnuncio();
+                    if(a.getDescricao().length()>0 && a.getContato().length()>0 && a.getFoto1().length()> 0 && a.getFoto2().length()>0 && a.getHorario_atendimento().length()>0 && a.getServicos().length()>0 && a.getUsuario().length()>0)
+                    {
+                        anunctrl.inserir(a);
+                    }
+                    else
+                    response.sendRedirect(".");
                     break;
 
             }

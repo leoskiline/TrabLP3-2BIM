@@ -21,6 +21,15 @@ public class Usuario {
     public Usuario() {
     }
 
+    public Usuario(String usuario, String senha, String nivel, String foto, String nome, String logradouro) {
+        this.usuario = usuario;
+        this.senha = senha;
+        this.nivel = nivel;
+        this.foto = foto;
+        this.nome = nome;
+        this.logradouro = logradouro;
+    }
+
     public Usuario(int id_usuario, String usuario, String senha, String nivel, String foto, String nome, String logradouro) {
         this.id_usuario = id_usuario;
         this.usuario = usuario;

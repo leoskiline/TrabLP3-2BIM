@@ -52,7 +52,7 @@
                     <input type="password" id="senha" name="senha" class="form-control" placeholder="Senha" required="">
                     
                     </div>
-                        <div class="mt-3 mb-3"></div>
+                        <div class="mt-3 mb-3 text-center"><a href='cadastro.jsp'>Cadastrar</a></div>
                     <button class="btn btn-lg btn-dark btn-block" type="submit">Autenticar</button>
                     <p class="mt-5 mb-3 text-muted text-center">© 2020</p>
                     </form>

@@ -36,6 +36,17 @@ public class Anuncio {
         this.servicos = servicos;
     }
 
+    public Anuncio(String foto1, String foto2, String foto3, String descricao, String horario_atendimento, String contato, String servicos, String usuario) {
+        this.foto1 = foto1;
+        this.foto2 = foto2;
+        this.foto3 = foto3;
+        this.descricao = descricao;
+        this.horario_atendimento = horario_atendimento;
+        this.contato = contato;
+        this.servicos = servicos;
+        this.usuario = usuario;
+    }
+
     public Anuncio() {
     }
 
