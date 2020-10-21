@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Bom Negocio</title>
+        <title>Bom Servico</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -22,7 +22,7 @@
     <body>
         <div class="container border">
             <div class="jumbotron text-black text-center" style="margin-bottom:0">
-                <h1>BOMNEGOCIO.COM</h1>
+                <h1>BOMSERVICO.COM</h1>
                 <p>Plataforma feita para voce realizar um bom negocio ao contratar servicos.</p>
             </div>
             <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
@@ -31,7 +31,7 @@
                         <a class="nav-link" href="index.jsp">Anuncios</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href='userarea.jsp'>Area do Usuario</a>
+                        <a class="nav-link" href='login.jsp'>Area do Usuario</a>
                     </li>
                  </ul>
             </nav>

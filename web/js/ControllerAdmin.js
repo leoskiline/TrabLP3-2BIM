@@ -1,42 +1,8 @@
-function LogarUsuario()
-{   event.preventDefault() // evita refresh da tela
-    var usuario = document.getElementById("usuario").value
-    var senha = document.getElementById("senha").value
-    const URL_TO_FETCH='TelaUsuario?usuario='+usuario+'&senha='+senha
-    fetch(URL_TO_FETCH,{method:'get'/*opcional*/}).then(function(response)
-    {
-        response.text().then(function(result)  //response é um promisse
-        {
-            // result contém a resposta do módulo dinâmico
-            document.getElementById('ViewUser').innerHTML = result
-            MostrarCategoria()
-        });
-    }).catch (function(err) {console.error(err)})
-
-}
-
-
-
 function MostrarCategoria()
-{   
-    //event.preventDefault() // evita refresh da tela
-    var categoria = document.getElementById("categoria").value
-    const URL_TO_FETCH='TelaUsuario?acao=mostrar&categoria='+categoria
-    fetch(URL_TO_FETCH,{method:'get'/*opcional*/}).then(function(response)
-    {
-        response.text().then(function(result)  //response é um promisse
-        {
-            // result contém a resposta do módulo dinâmico
-            document.getElementById('mostrarCat').innerHTML = result
-        });
-    }).catch (function(err) {console.error(err)})
-}
-
-function MostrarCategoria2()
 {   
     event.preventDefault() // evita refresh da tela
     var categoria = document.getElementById("categoria").value
-    const URL_TO_FETCH='TelaUsuario?acao=mostrar&categoria='+categoria
+    const URL_TO_FETCH='TelaAdmin?acao=mostrar&categoria='+categoria
     fetch(URL_TO_FETCH,{method:'get'/*opcional*/}).then(function(response)
     {
         response.text().then(function(result)  //response é um promisse
@@ -46,20 +12,6 @@ function MostrarCategoria2()
         });
     }).catch (function(err) {console.error(err)})
 }
-
-function SelectCategorias(listCategoria)
-{
-        
-        const CategoriasSelect = document.getElementById("cbCategoria")
-        var CategoriasList = listCategoria.split(",");
-        CategoriasList.forEach((categorias) =>
-        {
-           option = new Option(categorias, categorias.toLowerCase())
-           CategoriasSelect.options[CategoriasSelect.options.length] = option
-        })
-        return CategoriasList;
-}
-
 
 function GravarCategoria()
 {
@@ -68,7 +20,7 @@ function GravarCategoria()
     var cod = document.getElementById("cod").value
     if(categoria.length > 0)
     {
-        const URL_TO_FETCH='TelaUsuario?acao=confirmar&categoria='+categoria+'&cod='+cod
+        const URL_TO_FETCH='TelaAdmin?acao=confirmar&categoria='+categoria+'&cod='+cod
         fetch(URL_TO_FETCH,{method:'get'/*opcional*/}).then(function(response)
         {
             response.text().then(function(result)  //response é um promisse
@@ -96,10 +48,10 @@ function ApagaAlteraCategoria(acao, cod)
     switch (acao)
     {
         case "apagar":
-            url = "TelaUsuario?acao=apagar&cod=" + cod
+            url = "TelaAdmin?acao=apagar&cod=" + cod
             break
         case "alterar":
-            url = "TelaUsuario?acao=alterar&cod=" + cod
+            url = "TelaAdmin?acao=alterar&cod=" + cod
             break
     }
     

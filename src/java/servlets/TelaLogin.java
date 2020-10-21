@@ -5,6 +5,7 @@
  */
 package servlets;
 
+import entidades.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,13 +14,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import persistencia.DALUsuario;
 
 /**
  *
- * @author leonardo.custodio
+ * @author Leonardo
  */
-@WebServlet(name = "Logout", urlPatterns = {"/Logout"})
-public class Logout extends HttpServlet {
+@WebServlet(name = "TelaLogin", urlPatterns = {"/TelaLogin"})
+public class TelaLogin extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,9 +34,34 @@ public class Logout extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession sessao = request.getSession();
-        sessao.invalidate();
-        response.sendRedirect("login.jsp");
+        String usuario = request.getParameter("usuario");
+        String senha = request.getParameter("senha");
+        if(usuario != "" && senha != "")
+        {
+            DALUsuario ctrluser = new DALUsuario();
+            Usuario user = ctrluser.getUsuario(usuario, senha);
+            if(user != null)
+            {
+                HttpSession sessao = request.getSession(true);
+                sessao.setAttribute("usuario", user);
+                if(user.getNivel().equalsIgnoreCase("administrador"))
+                {
+                    response.sendRedirect("admin.jsp");
+                }
+                else
+                    response.sendRedirect("user.jsp");
+            }
+            else
+                response.getWriter().print("<div class=\"alert alert-danger alert-dismissible fade show\">\n" +
+                                            "    <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n" +
+                                            "    <strong>Usuario e/ou Senha Incorretos!</strong>" +
+                                            "  </div>");
+        }
+        else
+            response.getWriter().print("<div class=\"alert alert-danger alert-dismissible fade show\">\n" +
+                                        "    <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n" +
+                                        "    <strong>Preencha os Campos Obrigatorios!</strong>" +
+                                        "  </div>");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -67,7 +67,7 @@ public class DALAnuncio {
                 + "INNER JOIN servicos s on anuncios.servicos = s.id_servico "
                 + "INNER JOIN usuarios u on anuncios.usuario = u.id_usuario";
         if (!filtro.isEmpty()) {
-            sql += " where upper (categoria) LIKE upper ('%"+filtro+"%')";
+            sql += " where upper (descricao) LIKE upper ('%"+filtro+"%')";
         }
         sql += " order by id_anuncio;";
         ResultSet rs = new Conexao().consultar(sql);
