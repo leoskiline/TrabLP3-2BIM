@@ -25,7 +25,6 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script src="js/ControllerLogin.js" type="text/javascript"></script>
         <link href="css/estilo.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
@@ -46,25 +45,25 @@
             </nav>
             <div class="container p-3 my-3 border" >
                 <div class="container" id="formUser">
-                    <form class="form-signin" action='TelaLogin'>
-                    <div class="text-center mb-4">
-                    <h1 class="h3 mb-3 font-weight-normal">Area do Usuario</h1>
-                    </div>
+                    <form class="form-signin" action="TelaLogin">
+                        <div class="text-center mb-4">
+                        <h1 class="h3 mb-3 font-weight-normal">Area do Usuario</h1>
+                        </div>
 
-                    <div class="form-label-group">
-                    <label for="inputEmail">Usuario</label>
-                    <input type="text" id="usuario" name="usuario" class="form-control" placeholder="Usuario" autofocus="">
-                    </div>
+                        <div class="form-label-group">
+                        <label for="inputEmail">Usuario</label>
+                        <input type="text" id="usuario" name="usuario" class="form-control" placeholder="Usuario" autofocus="">
+                        </div>
 
-                    <div class="form-label-group pt-3">
-                    <label for="inputPassword">Senha</label>
-                    <input type="password" id="senha" name="senha" class="form-control" placeholder="Senha">
-                    
-                    </div>
-                        <div class="mt-3 mb-3 text-center"><a href='cadastro.jsp'>Cadastrar</a></div>
-                        <button class="btn btn-lg btn-dark btn-block" type="submit">Autenticar</button><br>
-                    <div id="ViewUser"></div>
-                    <p class="mt-5 mb-3 text-muted text-center">© 2020</p>
+                        <div class="form-label-group pt-3">
+                        <label for="inputPassword">Senha</label>
+                        <input type="password" id="senha" name="senha" class="form-control" placeholder="Senha">
+
+                        </div>
+                            <div class="mt-3 mb-3 text-center"><a href='cadastro.jsp'>Cadastrar</a></div>
+                            <button class="btn btn-lg btn-dark btn-block" type="submit">Autenticar</button><br>
+                        <div id="ViewUser"></div>
+                        <p class="mt-5 mb-3 text-muted text-center">© 2020</p>
                     
                     </form>
                 </div>

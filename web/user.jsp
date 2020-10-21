@@ -24,7 +24,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script src="js/ControllerAdmin.js" type="text/javascript"></script>
+        <script src="js/ControllerUsuario.js" type="text/javascript"></script>
         <link href="css/estilo.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
@@ -58,8 +58,8 @@
                             <div style="width: 60%">
                                 <div class="col-sm-8" style="margin-left:15%;margin-top:3%" align="center">
                                     <h5>Cadastrar Anuncio</h5><div id="gravouAnuncio"></div>
-                                    <form method="GET" action="TelaUsuario" name="dados" id="fdados" class="form ml-5">
-                                        <input type='hidden' id='acao' name='acao' value='gravarAnuncio'/>
+                                    <form method="GET" name="dados" onsubmit="CadastrarAnuncio()" id="fdados" class="form ml-5">
+                                        <input type='hidden' id='acao' name='acao' value='gravaranuncio'/>
                                         <input type='text' class='form-control mb-2 ml-2' placeholder='Descricao' name='descricao' id='descricao'/>
                                         <input type='text' class='form-control mb-2 ml-2' placeholder='Contato' name='contato' id='contato'/>
                                         <input type='text' class='form-control mb-2 ml-2' placeholder='Horario Atendimento' name='horario_atendimento' id='horario_atendimento'/>
@@ -73,10 +73,11 @@
                                                 }
                                             %>
                                         </select>
-                                        <input class='form-control mb-2 ml-2' type='text' placeholder='URL FOTO 1' name='foto1'/>
-                                        <input class='form-control mb-2 ml-2' type='text' placeholder='URL FOTO 2' name='foto2'/>
-                                        <input class='form-control mb-2 ml-2' type='text' placeholder='URL FOTO 3' name='foto3'/>
+                                        <input class='form-control mb-2 ml-2' type='text' placeholder='URL FOTO 1' name='foto1' id="foto1"/>
+                                        <input class='form-control mb-2 ml-2' type='text' placeholder='URL FOTO 2' name='foto2' id="foto2"/>
+                                        <input class='form-control mb-2 ml-2' type='text' placeholder='URL FOTO 3' name='foto3' id="foto3"/>
                                         <input value='Gravar' type='submit' class='btn btn-success mb-2 ml-2'/>
+                                        <div id='cadAnuncio'></div>
                                     </form>
                                 </div>
                             </div>

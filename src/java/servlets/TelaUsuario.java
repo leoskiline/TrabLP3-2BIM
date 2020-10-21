@@ -59,12 +59,21 @@ public class TelaUsuario extends HttpServlet {
                     if(a.getDescricao().length()>0 && a.getContato().length()>0 && a.getFoto1().length()> 0 && a.getFoto2().length()>0 && a.getHorario_atendimento().length()>0 && a.getServicos().length()>0 && a.getUsuario().length()>0)
                     {
                         if(anunctrl.inserir(a))
-                            response.getWriter().print("<script>function sucesso(){alert('Anuncio Gravado com Sucesso!')}</script><body align='center' onload='sucesso()'><a style='font-size:40px' href='login.jsp'>Voltar</a></body>");
+                            response.getWriter().print("<div class=\"alert alert-success alert-dismissible fade show\">\n" +
+                                                        "    <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n" +
+                                                        "    <strong>Anuncio Cadastrado com Sucesso!</strong> \n" +
+                                                        "  </div>");
                         else
-                            response.getWriter().print("<script>function falha(){alert('Falha ao Gravar Anuncio!')}</script><body align='center' onload='falha()'><a style='font-size:40px' href='login.jsp'>Voltar</a></body>");
+                            response.getWriter().print("<div class=\"alert alert-danger alert-dismissible fade show\">\n" +
+                                                        "    <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n" +
+                                                        "    <strong>Falha ao Cadastrar o Anuncio!</strong> \n" +
+                                                        "  </div>");
                     }
                     else
-                        response.getWriter().print("<script>function falha(){alert('Falha ao Gravar Anuncio!')}</script><body align='center' onload='falha()'><a style='font-size:40px' href='login.jsp'>Voltar</a></body>");
+                        response.getWriter().print("<div class=\"alert alert-danger alert-dismissible fade show\">\n" +
+                                                        "    <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n" +
+                                                        "    <strong>Preencha todos os Campos!</strong> \n" +
+                                                        "  </div>");
                     //response.sendRedirect("index.jsp");
                     break;
             }
