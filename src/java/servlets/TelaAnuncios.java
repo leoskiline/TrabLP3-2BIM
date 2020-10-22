@@ -26,9 +26,20 @@ public class TelaAnuncios extends HttpServlet {
         String res = "";
         ArrayList<Anuncio> anuncios = new DALAnuncio().getAnuncio(filtro);
         for (Anuncio a : anuncios) {
-          res += String.format("<tr><td>%s</td><td>%s</td><td><a href='%s' target='_blank'><img class='img-fluid' src='%s'/ style='width:60px;'><a/><a href='%s' target='_blank'><img class='img-fluid' src='%s'/ style='width:60px;'></a><a href='%s' target='_blank'><img class='img-fluid' src='%s'/ style='width:60px;'></a>"
-                  + "</td><td>%s</td><td>%s</td><td>%s</td>"
-              + "</tr>", "" + a.getServicos(), "" + a.getDescricao(), "" +a.getFoto1(), "" +a.getFoto1(), "" +a.getFoto2(), "" +a.getFoto2(), "" +a.getFoto3(),"" +a.getFoto3(),""+ a.getHorario_atendimento(),""+a.getContato(),""+a.getUsuario());
+          res += String.format("<tr><td>%s</td><td>%s</td><td style='width:20%%'><a href='%s' target='_blank'><img class='img-fluid' src='%s'/ style='width:60px;'><a/><a href='%s' target='_blank'><img class='img-fluid' src='%s'/ style='width:60px;'></a><a href='%s' target='_blank'><img class='img-fluid' src='%s'/ style='width:60px;'></a>"
+                  + "</td><td>%s</td><td>%s <a href='https://api.whatsapp.com/send?phone=%s&text=Gostaria de saber mais informacoes sobre seu anuncio no site bom negocio'><img style='width:20px;height:20px'src='https://i0.wp.com/cantinhodabrantes.com.br/wp-content/uploads/2017/08/whatsapp-logo-PNG-Transparent.png'/></a></td><td>%s</td>"
+              + "</tr>", "" + a.getServicos(), "" + a.getDescricao(), "" +a.getFoto1(), "" +a.getFoto1(), "" +a.getFoto2(), "" +a.getFoto2(), "" +a.getFoto3(),"" +a.getFoto3(),""+ a.getHorario_atendimento(),""+a.getContato(),""+a.getContato(),""+a.getUsuario());
+        }
+        return res;
+    }
+    
+    public String buscaAnunciosCat(String filtro) {
+        String res = "";
+        ArrayList<Anuncio> anuncios = new DALAnuncio().getAnuncioCat(filtro);
+        for (Anuncio a : anuncios) {
+          res += String.format("<tr><td>%s</td><td>%s</td><td style='width:20%%'><a href='%s' target='_blank'><img class='img-fluid' src='%s'/ style='width:60px;'><a/><a href='%s' target='_blank'><img class='img-fluid' src='%s'/ style='width:60px;'></a><a href='%s' target='_blank'><img class='img-fluid' src='%s'/ style='width:60px;'></a>"
+                  + "</td><td>%s</td><td>%s <a href='https://api.whatsapp.com/send?phone=%s&text=Gostaria de saber mais informacoes sobre seu anuncio no site bom negocio'><img style='width:20px;height:20px'src='https://i0.wp.com/cantinhodabrantes.com.br/wp-content/uploads/2017/08/whatsapp-logo-PNG-Transparent.png'/></a></td><td>%s</td>"
+              + "</tr>", "" + a.getServicos(), "" + a.getDescricao(), "" +a.getFoto1(), "" +a.getFoto1(), "" +a.getFoto2(), "" +a.getFoto2(), "" +a.getFoto3(),"" +a.getFoto3(),""+ a.getHorario_atendimento(),""+a.getContato(),""+a.getContato(),""+a.getUsuario());
         }
         return res;
     }
@@ -50,6 +61,11 @@ public class TelaAnuncios extends HttpServlet {
                     String filtro = request.getParameter("filtro");
                     String resultado = buscaAnuncios(filtro);
                     response.getWriter().print(resultado);
+                    break;
+                    case "consultarcat":
+                    String filtrocat = request.getParameter("categoriaCad");
+                    String resultadocat = buscaAnunciosCat(filtrocat);
+                    response.getWriter().print(resultadocat);
                     break;
                 case "apagar":
                     if (!ctr.apagar(cod))

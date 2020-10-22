@@ -58,7 +58,7 @@
                             <div style="width: 60%">
                                 <div class="col-sm-8" style="margin-left:15%;margin-top:3%" align="center">
                                     <h5>Cadastrar Anuncio</h5><div id="gravouAnuncio"></div>
-                                    <form method="GET" name="dados" onsubmit="CadastrarAnuncio()" id="fdados" class="form ml-5">
+                                    <form method="POST" name="dados" onsubmit="CadastrarAnuncio()" id="fdados" enctype="multipart/form-data" class="form ml-5">
                                         <input type='hidden' id='acao' name='acao' value='gravaranuncio'/>
                                         <input type='text' class='form-control mb-2 ml-2' placeholder='Descricao' name='descricao' id='descricao'/>
                                         <input type='text' class='form-control mb-2 ml-2' placeholder='Contato' name='contato' id='contato'/>
@@ -73,9 +73,9 @@
                                                 }
                                             %>
                                         </select>
-                                        <input class='form-control mb-2 ml-2' type='text' placeholder='URL FOTO 1' name='foto1' id="foto1"/>
-                                        <input class='form-control mb-2 ml-2' type='text' placeholder='URL FOTO 2' name='foto2' id="foto2"/>
-                                        <input class='form-control mb-2 ml-2' type='text' placeholder='URL FOTO 3' name='foto3' id="foto3"/>
+                                        <input class='form-control-file mb-2 ml-2' type='file' placeholder='URL FOTO 1' accept="image/png, image/jpeg" name='foto1' id="foto1"/>
+                                        <input class='form-control-file mb-2 ml-2' type='file' placeholder='URL FOTO 2' accept="image/png, image/jpeg" name='foto2' id="foto2"/>
+                                        <input class='form-control-file mb-2 ml-2' type='file' placeholder='URL FOTO 3' accept="image/png, image/jpeg" name='foto3' id="foto3"/>
                                         <input value='Gravar' type='submit' class='btn btn-success mb-2 ml-2'/>
                                         <div id='cadAnuncio'></div>
                                     </form>

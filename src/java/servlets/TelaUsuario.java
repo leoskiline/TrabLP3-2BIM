@@ -7,18 +7,28 @@ package servlets;
 
 import entidades.Anuncio;
 import entidades.Usuario;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 import persistencia.DALAnuncio;
 
+@MultipartConfig(
+        location="/",
+        fileSizeThreshold=1024*1024,
+        maxFileSize=1024*1024*100,
+        maxRequestSize = 1024*1024*10*10
+)
 /**
  *
  * @author Leonardo
@@ -52,11 +62,40 @@ public class TelaUsuario extends HttpServlet {
                     a.setUsuario(userid);
                     a.setHorario_atendimento(request.getParameter("horario_atendimento"));
                     a.setServicos(request.getParameter("categoriaCad"));
-                    a.setFoto1(request.getParameter("foto1"));
-                    a.setFoto2(request.getParameter("foto2"));
-                    a.setFoto3(request.getParameter("foto3"));
+                    try{
+                        Part foto1 = request.getPart("foto1");
+                        byte[] imagem_foto1 = new byte[(int)foto1.getSize()];
+                        foto1.getInputStream().read(imagem_foto1);
+                        FileOutputStream arquivo_foto1 = new FileOutputStream(new File(getServletContext().getRealPath("/imagens")+"/1"+foto1.getSubmittedFileName()));
+                        String caminho_foto1 = "imagens/1"+foto1.getSubmittedFileName();
+                        a.setFoto1(caminho_foto1);
+                        arquivo_foto1.write(imagem_foto1);
+                        arquivo_foto1.close();
+                        Part foto2 = request.getPart("foto2");
+                        byte[] imagem_foto2 = new byte[(int)foto2.getSize()];
+                        foto2.getInputStream().read(imagem_foto2);
+                        FileOutputStream arquivo_foto2 = new FileOutputStream(new File(getServletContext().getRealPath("/imagens")+"/2"+foto2.getSubmittedFileName()));
+                        String caminho_foto2 = "imagens/2"+foto2.getSubmittedFileName();
+                        a.setFoto2(caminho_foto2);
+                        arquivo_foto2.write(imagem_foto2);
+                        arquivo_foto2.close();
+                        Part foto3 = request.getPart("foto3");
+                        byte[] imagem_foto3 = new byte[(int)foto3.getSize()];
+                        foto3.getInputStream().read(imagem_foto3);
+                        FileOutputStream arquivo_foto3 = new FileOutputStream(new File(getServletContext().getRealPath("/imagens")+"/3"+foto3.getSubmittedFileName()));
+                        String caminho_foto3 = "imagens/3"+foto3.getSubmittedFileName();
+                        a.setFoto3(caminho_foto3);
+                        arquivo_foto3.write(imagem_foto3);
+                        arquivo_foto3.close();
+                    }catch(IOException e)
+                    {
+                        response.getWriter().print("<div class=\"alert alert-danger alert-dismissible fade show\">\n" +
+                                                        "    <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n" +
+                                                        "    <strong>Falha ao Cadastrar o Anuncio!</strong> \n" +
+                                                        "  </div>"+e.toString());
+                    }
                     DALAnuncio anunctrl = new DALAnuncio();
-                    if(a.getDescricao().length()>0 && a.getContato().length()>0 && a.getFoto1().length()> 0 && a.getFoto2().length()>0 && a.getHorario_atendimento().length()>0 && a.getServicos().length()>0 && a.getUsuario().length()>0)
+                    if(a.getDescricao().length()>0 && a.getContato().length()>0 && a.getFoto1().length()> 0 && a.getFoto2().length()>0 && a.getFoto3().length()>0 && a.getHorario_atendimento().length()>0 && a.getServicos().length()>0 && a.getUsuario().length()>0)
                     {
                         if(anunctrl.inserir(a))
                             response.getWriter().print("<div class=\"alert alert-success alert-dismissible fade show\">\n" +

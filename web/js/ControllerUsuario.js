@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-function CadastrarAnuncio()
+/*function CadastrarAnuncio()
 {   event.preventDefault() // evita refresh da tela
     var acao = document.getElementById("acao").value
     var descricao = document.getElementById("descricao").value
@@ -15,7 +15,7 @@ function CadastrarAnuncio()
     var foto2 = document.getElementById("foto2").value
     var foto3 = document.getElementById("foto3").value
     const URL_TO_FETCH='TelaUsuario?acao='+acao+'&descricao='+descricao+'&horario_atendimento='+horario_atendimento+'&categoriaCad='+categoriaCad+'&foto1='+foto1+'&foto2='+foto2+'&foto3='+foto3+'&contato='+contato
-    fetch(URL_TO_FETCH,{method:'get'/*opcional*/}).then(function(response)
+    fetch(URL_TO_FETCH,{method:'get'}).then(function(response)
     {
         response.text().then(function(result)  //response é um promisse
         {
@@ -26,5 +26,27 @@ function CadastrarAnuncio()
         });
     }).catch (function(err) {console.error(err)})
 
+}*/
+
+function CadastrarAnuncio()
+{
+   event.preventDefault() // evita refresh da tela
+                
+   const URL_TO_FETCH = 'TelaUsuario?acao=gravaranuncio'
+
+   var formData = new FormData(document.getElementById("fdados"))
+   //formData.append('acao', 'confirmar'); opcional, caso queira inserir outra informação
+                
+   fetch(URL_TO_FETCH, { method: 'post',body: formData 
+   }).then(function (response) {
+        return response.text()
+   }).then(function (retorno) {
+        // result recebe a resposta do módulo dinâmico
+            document.getElementById('fdados').reset()
+            document.getElementById('cadAnuncio').innerHTML = retorno
+   }).catch(function (error) {
+        console.error(error);
+   })
 }
+
 

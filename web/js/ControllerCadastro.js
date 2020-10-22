@@ -5,23 +5,24 @@
  */
 
 function CadastrarUsuario()
-{   event.preventDefault() // evita refresh da tela
-    var usuario = document.getElementById("usuario").value
-    var senha = document.getElementById("senha").value
-    var foto = document.getElementById("foto").value
-    var nome = document.getElementById("nome").value
-    var logradouro = document.getElementById("logradouro").value
-    const URL_TO_FETCH='TelaCadastro?usuario='+usuario+'&senha='+senha+'&foto='+foto+'&nome='+nome+'&logradouro='+logradouro
-    fetch(URL_TO_FETCH,{method:'get'/*opcional*/}).then(function(response)
-    {
-        response.text().then(function(result)  //response é um promisse
-        {
-            // result contém a resposta do módulo dinâmico
-            document.getElementById('ViewUser').innerHTML = result
-            document.getElementById('fdados').reset();  
-            
-        });
-    }).catch (function(err) {console.error(err)})
+{
+   event.preventDefault() // evita refresh da tela
+                
+   const URL_TO_FETCH = 'TelaCadastro'
 
+   var formData = new FormData(document.getElementById("fdados"))
+   //formData.append('acao', 'confirmar'); opcional, caso queira inserir outra informação
+                
+   fetch(URL_TO_FETCH, { method: 'post',body: formData 
+   }).then(function (response) {
+        return response.text()
+   }).then(function (retorno) {
+        // result recebe a resposta do módulo dinâmico
+            document.getElementById('fdados').reset()
+            document.getElementById('cadUser').innerHTML = retorno
+   }).catch(function (error) {
+        console.error(error);
+   })
 }
+
 

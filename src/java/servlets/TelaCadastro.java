@@ -6,19 +6,26 @@
 package servlets;
 
 import entidades.Usuario;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import persistencia.DALUsuario;
 
-/**
- *
- * @author Leonardo
- */
+@MultipartConfig(
+        location="/",
+        fileSizeThreshold=1024*1024,
+        maxFileSize=1024*1024*100,
+        maxRequestSize = 1024*1024*10*10
+)
+
 @WebServlet(name = "TelaCadastro", urlPatterns = {"/TelaCadastro"})
 public class TelaCadastro extends HttpServlet {
 
@@ -35,11 +42,26 @@ public class TelaCadastro extends HttpServlet {
             throws ServletException, IOException {
         String usuario = request.getParameter("usuario");
         String senha = request.getParameter("senha");
-        String foto = request.getParameter("foto");
+        String caminho_foto = "";
+        try{
+                        Part foto = request.getPart("foto");
+                        byte[] imagem_foto = new byte[(int)foto.getSize()];
+                        foto.getInputStream().read(imagem_foto);
+                        FileOutputStream arquivo_foto = new FileOutputStream(new File(getServletContext().getRealPath("/imagens/")+usuario+"-"+foto.getSubmittedFileName()));
+                        caminho_foto = getServletContext().getContextPath()+"/imagens/"+usuario+"-"+foto.getSubmittedFileName();
+                        arquivo_foto.write(imagem_foto);
+                        arquivo_foto.close();
+        }catch(IOException e)
+        {
+            response.getWriter().print("<div class=\"alert alert-danger alert-dismissible fade show\">\n" +
+                            "    <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n" +
+                            "    <strong>Falha ao Cadastrar Usuario!</strong> \n" +
+                            "  </div>");
+        }
         String nome = request.getParameter("nome");
         String logradouro = request.getParameter("logradouro");
         DALUsuario ctrl = new DALUsuario();
-        Usuario u = new Usuario(usuario,senha,"prestador de servico",foto,nome,logradouro);
+        Usuario u = new Usuario(usuario,senha,"prestador de servico",caminho_foto,nome,logradouro);
         String resposta = "<div class=\"alert alert-danger alert-dismissible fade show\">\n" +
                             "    <button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>\n" +
                             "    <strong>Falha ao Cadastrar Usuario!</strong> \n" +

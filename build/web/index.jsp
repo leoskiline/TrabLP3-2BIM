@@ -3,12 +3,14 @@
     Created on : 17/10/2020, 11:08:09
     Author     : Leonardo
 --%>
+<%@page import="entidades.Servico"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="persistencia.DALServico"%>
 <%@page import="servlets.TelaAnuncios"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
-<% String filtro = request.getParameter("filtro");%>
 <html>
     <head>
         <title>Bom Servico</title>
@@ -40,6 +42,18 @@
             <div class="container p-3 my-3 border">
                 <form name="pesquisa" onsubmit="MostraAnuncios()">
                 <div class="form-inline float-right">
+                    <label style="margin-right:8px" >Categoria: </label>
+                    <select onchange="MostraCategorias()" style="position:relative;top:3px;" class='custom-select mb-2 mr-3' id='categoriaCad' name='categoriaCad'>
+                                            <%
+                                                DALServico ctrlserv = new DALServico();
+                                                ArrayList<Servico> servarray = ctrlserv.getServico("");
+                                                for(int i = 0;i < servarray.size();i++)
+                                                {
+                                                    %><option value="<%=servarray.get(i).getId_servico()%>"><%=servarray.get(i).getCategoria()%></option><%
+                                                }
+                                            %>
+                    </select>
+                    <label style="margin-right:8px" >Descricao: </label>
                     <input type="text" name="filtro" id="filtro" size="20" placeholder="Pesquisa" class="form-control mb-2 mr-sm-2" style="position:relative;top:3px;"/> 
                     <input type="submit" name="bpesq" value="Pesquisar" class="btn btn-dark" />
                     <br><br>

@@ -12,3 +12,18 @@ function MostraAnuncios()
     }).catch (function(err) {console.error(err)})
 
 }
+
+function MostraCategorias()
+{
+    event.preventDefault()
+    var categoriaCad=document.getElementById("categoriaCad").value 
+    const URL_TO_FETCH='TelaAnuncios?acao=consultarCat&categoriaCad='+categoriaCad
+    fetch(URL_TO_FETCH,{method:'get'/*opcional*/}).then(function(response)
+    {
+        response.text().then(function(result)  //response é um promisse
+        {
+            // result contém a resposta do módulo dinâmico
+            document.getElementById('tabelaAnuncios').innerHTML = result
+        });
+    }).catch (function(err) {console.error(err)})
+}
