@@ -102,4 +102,25 @@ public class DALAnuncio {
         }
         return lista;
     }
+    public ArrayList<Anuncio> getAnuncioCatDesc(String filtro) {
+        ArrayList<Anuncio> lista = new ArrayList();
+        String sql = "SELECT * "
+                + "FROM anuncios "
+                + "INNER JOIN servicos s on anuncios.servicos = s.id_servico "
+                + "INNER JOIN usuarios u on anuncios.usuario = u.id_usuario";
+        if (!filtro.isEmpty()) {
+            sql += " where (s.categoria) LIKE '"+filtro+"'";
+        }
+        sql += " order by id_anuncio;";
+        ResultSet rs = new Conexao().consultar(sql);
+        try {
+            while (rs.next()) {
+                lista.add(
+                       new Anuncio(rs.getInt("id_anuncio"),rs.getString("foto1"),rs.getString("foto2"),rs.getString("foto3"),rs.getString("descricao"),rs.getString("horario_atendimento"),rs.getString("contato"),rs.getString("categoria"),rs.getString("nome")));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return lista;
+    }
 }
