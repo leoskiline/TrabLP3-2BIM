@@ -49,8 +49,8 @@
             <div class="container p-3 my-3 border">
                 <div class='container border pb-3 pt-3' style='text-align:center;font-size:30px'>Pagina do Prestador de Servico<form action='Logout' class="float-right mt-1"><input type='submit' value='Deslogar' class='btn btn-outline-danger float-right'/></form><br></div>
                     <div class='row ml-1 mt-3'>
-                        <div class='card' style='width:400px;height:400px'>
-                            <img class='card-img-top' src="<%=user.getFoto()%>"/>
+                        <div class='card' style='width:400px;height:400px;'>
+                            <img class='card-img-top pl-5' style='width:300px;height:200px' src="<%=user.getFoto()%>"/>
                             <div class="card-body">
                                 <h4>Bem-vindo <%=user.getNome()%></h4>
                                 <b>Usuario: </b><%=user.getUsuario()%><br>
