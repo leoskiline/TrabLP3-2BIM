@@ -28,6 +28,16 @@ public class Conexao {
             erro = "Outro erro: " + ex.toString();
         }
     }
+    
+    public Connection getConnection()
+    {
+        try
+        {
+            return DriverManager.getConnection("jdbc:postgresql://localhost/bomnegocio", "postgres", "postgres123");
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public String getMensagemErro() {
         return erro;

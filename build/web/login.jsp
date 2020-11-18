@@ -41,6 +41,9 @@
                     <li class="nav-item active">
                         <a class="nav-link">Area do Usuario</a>
                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="api.jsp">Usar API</a>
+                    </li>
                  </ul>
             </nav>
             <div class="container p-3 my-3 border" >

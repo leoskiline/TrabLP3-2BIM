@@ -5,24 +5,29 @@
  */
 package servlets;
 
-import com.google.gson.Gson;
-import entidades.Anuncio;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import persistencia.DALAnuncio;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRResultSetDataSource;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
+import utils.Conexao;
 
 /**
  *
  * @author Leonardo
  */
-@WebServlet(name = "APIRestful", urlPatterns = {"/APIRestful"})
-public class APIRestful extends HttpServlet {
+@WebServlet(name = "ImprimirRelatorio", urlPatterns = {"/ImprimirRelatorio"})
+public class ImprimirRelatorio extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,31 +40,26 @@ public class APIRestful extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("application/json;charset=UTF-8");
-        String categoria = request.getParameter("categoria");
-        DALAnuncio an = new DALAnuncio();
-        ArrayList <Anuncio> anuncios = an.getAnuncioCatDesc(categoria);
-        Gson gson = new Gson();
-        String resultado = "";
-        for(int i = 0;i < anuncios.size();i++)
-        {
-            resultado += gson.toJson(anuncios.get(i));
-        }
-        if(resultado.equals(""))
-        {
-            try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("Nao encontrou nada");
-          }
-        }
-        else
-        {
-            try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-                 out.println(resultado);
-             }
-        }
+        response.setContentType("application/pdf");
+        byte[] pdf=gerarRelatorioPDF("SELECT * FROM anuncios a INNER JOIN servicos s ON s.id_servico = a.servicos INNER JOIN usuarios u ON u.id_usuario = a.usuario",getServletContext().getRealPath("")+"relatorios\\RelatorioAnuncios.jasper");
+        response.getOutputStream().write(pdf,0,pdf.length);
+        response.getOutputStream().flush();
+        response.getOutputStream().close();
     }
+    private byte[] gerarRelatorioPDF(String sql, String relat)
+        {   
+            byte[] pdf;
+            try { //sql para obter os dados para o relatorio
+                JasperPrint jasperprint=null;
+                ResultSet rs = new Conexao().consultar(sql);
+                JRResultSetDataSource jrRS = new JRResultSetDataSource(rs);
+                jasperprint = JasperFillManager.fillReport(relat, null, jrRS);
+                pdf=JasperExportManager.exportReportToPdf(jasperprint);
+            } catch (JRException erro) {
+                pdf=null;
+            }
+            return pdf;
+        }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

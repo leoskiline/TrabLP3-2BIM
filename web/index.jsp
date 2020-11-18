@@ -37,6 +37,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="login.jsp">Area do Usuario</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="api.jsp">Usar API</a>
+                    </li>
   </ul>
             </nav>
             <div class="container p-3 my-3 border">
@@ -68,6 +71,7 @@
                         <!-- será montada aqui a tabela de anuncios cadastrados-->
                     </tbody>
                 </table>
+                    <div class="text-center"><a href="ImprimirRelatorio" target="_blank">Imprimir Relatorio</a></div>
             </div>
             </div>
         </div>
