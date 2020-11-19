@@ -65,13 +65,13 @@
                 <div class="container table-responsive">    
                 <table class="table table-hover" >
                     <thead>
-                        <tr style="text-align:center"><th>Categoria</th><th>Descricao</th><th>Fotos</th><th>Horario de Atendimento</th><th>Contato</th><th>Usuario</th></tr>
+                        <tr style="text-align:center"><th>Categoria</th><th>Descricao</th><th>Fotos</th><th>Horario de Atendimento</th><th width="200px">Contato</th><th>Usuario</th></tr>
                     </thead>
                     <tbody id="tabelaAnuncios">                
                         <!-- será montada aqui a tabela de anuncios cadastrados-->
                     </tbody>
                 </table>
-                    <div class="text-center"><a href="ImprimirRelatorio" target="_blank">Imprimir Relatorio</a></div>
+                    <div class="text-center"><a href="ImprimirRelatorio" target="_blank">Imprimir Relatorio de Todos Anuncios</a></div>
             </div>
             </div>
         </div>
